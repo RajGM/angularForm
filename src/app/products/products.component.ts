@@ -24,8 +24,11 @@ interface Product {
   styleUrl: './products.component.css'
 })
 export class ProductsComponent {
+  readonly baseUrl = 'http://localhost:4200/assets/';
+
   products=[
     {
+      image:`${this.baseUrl}p1.jpg`,
       title: 'Product 1',
       releaseDate: new Date('2023-01-01'),
       code: 'P1001',
@@ -37,6 +40,7 @@ export class ProductsComponent {
       }
     },
     {
+      image:`${this.baseUrl}p2.jpg`,
       title: 'Product 2',
       releaseDate: new Date('2023-02-15'),
       code: 'P1002',
@@ -47,6 +51,30 @@ export class ProductsComponent {
         variantsInStock: 3
       }
     },
+    {
+      image:`${this.baseUrl}p1.jpg`,
+      title: 'Product 1',
+      releaseDate: new Date('2023-01-01'),
+      code: 'P1001',
+      numberOfVariants: 3,
+      sales: 150,
+      stock: {
+        itemsInStock: 50,
+        variantsInStock: 2
+      }
+    },
+    {
+      image:`${this.baseUrl}p2.jpg`,
+      title: 'Product 2',
+      releaseDate: new Date('2023-02-15'),
+      code: 'P1002',
+      numberOfVariants: 5,
+      sales: 200,
+      stock: {
+        itemsInStock: 75,
+        variantsInStock: 3
+      }
+    }
   ];
 
 

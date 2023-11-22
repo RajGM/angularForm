@@ -1,21 +1,16 @@
-<main>
-  <a [routerLink]="['/']">
+<main class="flex flex-col min-h-screen bg-gray-100">
+  <a [routerLink]="['/']" class="p-4">
     <header class="brand-name">
-      <img
-        class="brand-logo"
-        src="assets/fliproom.png"
-        alt="logo"
-        aria-hidden="true"
-      />
+      <img class="brand-logo h-12 mx-auto" src="assets/fliproom.png" alt="logo" aria-hidden="true" />
     </header>
   </a>
-  <nav>
-    <ul>
-      <li><a routerLink="/products">Products</a></li>
-      <li><a routerLink="/create-product">Create Product</a></li>
+  <nav class="bg-white shadow">
+    <ul class="flex justify-center space-x-4">
+      <li><a routerLink="/products" class="text-gray-700 hover:text-gray-900 px-3 py-2">Products</a></li>
+      <li><a routerLink="/create-product" class="text-gray-700 hover:text-gray-900 px-3 py-2">Create Product</a></li>
     </ul>
   </nav>
-  <section class="content">
+  <section class="content flex-grow p-4">
     <router-outlet></router-outlet>
   </section>
 </main>
