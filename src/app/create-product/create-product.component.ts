@@ -41,6 +41,7 @@ export class CreateProductComponent {
 
   onSubmit(): void {
     if (this.productForm.valid) {
+      console.log("Data here:",this.productForm.value)
       // Process form data here
       // Add the new product to the products array
     } else {

@@ -3,14 +3,13 @@
 
   <div class="search-and-filter">
     <div class="flex justify-center space-x-4 my-4">
-      <button class="btn btn-secondary" (click)="setFilter('hot')">Hot Products</button>
-      <button class="btn btn-accent" (click)="setFilter('upcoming')">Upcoming Releases</button>
+      <button class="btn" (click)="dataService.setFilter('hot')">Hot Products</button>
+      <button class="btn" (click)="dataService.setFilter('upcoming')">Upcoming Releases</button>
     </div>
   </div>
   
-
   <cdk-virtual-scroll-viewport itemSize="150" class="product-list">
-    <div *cdkVirtualFor="let product of filteredProducts" class="product-card">
+    <div *cdkVirtualFor="let product of dataService.filteredProducts" class="product-card">
       <img
         [src]="product.image"
         alt="{{ product.title }}"
