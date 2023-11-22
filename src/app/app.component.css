@@ -1,0 +1,45 @@
+/* Base styles */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .brand-name {
+    margin: 20px;
+    padding: 10px;
+  }
+  
+  .brand-logo {
+    height: 50px;
+    width: 50px;
+    }
+  
+  .content {
+    margin: 20px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  /* Desktop styles */
+  @media (min-width: 768px) {
+    .brand-name {
+      margin: 40px;
+      padding: 20px;
+    }
+  
+    .content {
+      margin: 40px;
+      padding: 20px;
+      width: 80%; /* Adjust width for desktop */
+    }
+  }
+  
+  /* Mobile styles */
+  @media (max-width: 767px) {
+    .brand-logo {
+      width: 50%; /* Adjust logo size for mobile */
+    }
+  }
+  

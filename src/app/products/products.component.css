@@ -1,0 +1,5 @@
+.product-list {
+    height: 300px; /* Adjust as needed */
+    overflow: auto;
+  }
+  

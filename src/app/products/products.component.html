@@ -1,0 +1,20 @@
+<div class="products-container">
+    <h1>Market Products</h1>
+  
+    <cdk-virtual-scroll-viewport itemSize="50" class="product-list">
+        <div *cdkVirtualFor="let product of products" class="product-item">
+          <h3>{{ product.title }}</h3>
+          <p>Release Date: {{ product.releaseDate | date }}</p>
+          <p>Code: {{ product.code }}</p>
+          <p>Variants: {{ product.numberOfVariants }}</p>
+          <p>Sales: {{ product.sales }}</p>
+          <p>Items in Stock: {{ product.stock.itemsInStock }}</p>
+          <p>Variants in Stock: {{ product.stock.variantsInStock }}</p>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    
+   
+      
+  </div>
+
+  
