@@ -1,25 +1,35 @@
 <div class="products-container">
-    <h1>Market Products</h1>
-  
-    <cdk-virtual-scroll-viewport itemSize="150" class="product-list">
-        <div *cdkVirtualFor="let product of products" class="product-card">
-          <img [src]="product.image" alt="{{ product.title }}" class="product-image">
-      
-          <div class="product-details">
-            <div class="title-and-date">
-              <h3 class="product-title">{{ product.title }}</h3>
-              <p class="release-date">{{ product.releaseDate | date }}</p>
-            </div>
-            <p class="product-code">Code: {{ product.code }}</p>
-            <p>Variants: {{ product.numberOfVariants }}</p>
-            <p class="product-sales">Sales: {{ product.sales }}</p>
-            <p>Stock: {{ product.stock.itemsInStock }} items, {{ product.stock.variantsInStock }} variants</p>
-          </div>
-        </div>
-      </cdk-virtual-scroll-viewport>
-      
-   
-      
-  </div>
+  <h1>Market Products</h1>
 
+  <div class="search-and-filter">
+    <div class="flex justify-center space-x-4 my-4">
+      <button class="btn btn-secondary" (click)="setFilter('hot')">Hot Products</button>
+      <button class="btn btn-accent" (click)="setFilter('upcoming')">Upcoming Releases</button>
+    </div>
+  </div>
   
+
+  <cdk-virtual-scroll-viewport itemSize="150" class="product-list">
+    <div *cdkVirtualFor="let product of filteredProducts" class="product-card">
+      <img
+        [src]="product.image"
+        alt="{{ product.title }}"
+        class="product-image"
+      />
+
+      <div class="product-details">
+        <div class="title-and-date">
+          <h3 class="product-title">{{ product.title }}</h3>
+          <p class="release-date">{{ product.releaseDate | date }}</p>
+        </div>
+        <p class="product-code">Code: {{ product.code }}</p>
+        <p>Variants: {{ product.numberOfVariants }}</p>
+        <p class="product-sales">Sales: {{ product.sales }}</p>
+        <p>
+          Stock: {{ product.stock.itemsInStock }} items,
+          {{ product.stock.variantsInStock }} variants
+        </p>
+      </div>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</div>
