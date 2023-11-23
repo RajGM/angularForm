@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 interface Product {
   image: string;
@@ -75,6 +76,69 @@ export class DataService {
     },
   ];
 
+  productForm: FormGroup = this.fb.group({});
+
+  constructor(private fb: FormBuilder) {
+    this.initializeProductForm();
+   }
+
+   public initializeProductForm(): void {
+    this.productForm = this.fb.group({
+      title: ['', Validators.required],
+      code: ['', Validators.required],
+      variants: this.fb.array([this.createVariant()], Validators.minLength(1)),
+    });
+  }
+
+  createVariant(): FormGroup {
+    return this.fb.group({
+      name: ['', Validators.required],
+    });
+  }
+
+  addVariant(): void {
+    const variants = this.productForm.get('variants') as FormArray;
+    variants.push(this.createVariant());
+  }
+
+  removeVariant(index: number): void {
+    const variants = this.productForm.get('variants') as FormArray;
+    variants.removeAt(index);
+  }
+
+  submitProductForm(): void {
+    if (this.productForm.valid) {
+      console.log("Form Data:", this.productForm.value);
+  
+      // Extract form data
+      const newProduct: Product = {
+        ...this.productForm.value,
+        // Assuming you have an image field or you can set a default image
+        image: `${this.baseUrl}default.jpg`,
+        // Add other necessary fields or default values
+        releaseDate: new Date(), // Example, set the current date as release date
+        sales: 0, // Assuming initial sales are 0
+        stock: {
+          itemsInStock: 0, // Example default value
+          variantsInStock: this.productForm.value.variants.length,
+        },
+      };
+  
+      // Add the new product to the products array
+      this.products.push(newProduct);
+  
+      // Optionally, you might want to reset the form here
+      this.productForm.reset();
+  
+    } else {
+      console.log("Form is not valid");
+      // Handle form validation errors
+    }
+  }
+  
+
+  // New properties for form handling
+  
   ngOnInit() {
     this.currentFilter = 'hot'; // Set the default filter to 'hot'
     this.applyFilters();
@@ -116,5 +180,5 @@ export class DataService {
     this.filteredProducts = [...tempProducts];
   }
 
-  constructor() { }
+  
 }

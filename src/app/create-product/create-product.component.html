@@ -1,5 +1,5 @@
 <form
-  [formGroup]="productForm"
+  [formGroup]="dataService.productForm"
   (ngSubmit)="onSubmit()"
   class="p-4 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
 >
@@ -30,7 +30,7 @@
   <div formArrayName="variants" class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2">Variants</label>
     <div
-      *ngFor="let variant of variants().controls; let i = index"
+      *ngFor="let variant of variants.controls; let i = index"
       [formGroupName]="i"
       class="mb-2"
     >
@@ -43,7 +43,7 @@
       />
       <button
         type="button"
-        (click)="removeVariant(i)"
+        (click)="dataService.removeVariant(i)"
         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Remove
@@ -51,7 +51,7 @@
     </div>
     <button
       type="button"
-      (click)="addVariant()"
+      (click)="dataService.addVariant()"
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     >
       Add Variant
