@@ -1,34 +1,94 @@
 <div class="products-container">
   <h1>Market Products</h1>
 
+  <!-- Search Bar -->
+  <div class="search-bar mb-4 flex justify-center items-center space-x-2">
+    <input
+      type="text"
+      #searchInput
+      placeholder="Search products..."
+      class="input input-bordered input-primary w-full max-w-xs"
+    />
+    <button
+      class="btn btn-primary"
+      (click)="dataService.applySearch(searchInput.value)"
+    >
+      Search
+    </button>
+  </div>
+
+  <!-- Filter Buttons -->
   <div class="search-and-filter">
     <div class="flex justify-center space-x-4 my-4">
-      <button class="btn" (click)="dataService.setFilter('hot')">Hot Products</button>
-      <button class="btn" (click)="dataService.setFilter('upcoming')">Upcoming Releases</button>
+      <button class="btn" (click)="dataService.setFilter('hot')">
+        Hot Products
+      </button>
+      <button class="btn" (click)="dataService.setFilter('upcoming')">
+        Upcoming Releases
+      </button>
     </div>
   </div>
-  
-  <cdk-virtual-scroll-viewport itemSize="150" class="product-list">
-    <div *cdkVirtualFor="let product of dataService.filteredProducts" class="product-card">
-      <img
-        [src]="product.image"
-        alt="{{ product.title }}"
-        class="product-image"
-      />
 
-      <div class="product-details">
-        <div class="title-and-date">
-          <h3 class="product-title">{{ product.title }}</h3>
-          <p class="release-date">{{ product.releaseDate | date }}</p>
+  <div class="products-and-message-container">
+    <!-- Product List -->
+    <cdk-virtual-scroll-viewport itemSize="150" class="product-list" *ngIf="dataService.filteredProducts.length > 0">
+      <div
+        *cdkVirtualFor="let product of dataService.filteredProducts"
+        class="product-card"
+      >
+        <img
+          [src]="product.image"
+          alt="{{ product.title }}"
+          class="product-image"
+        />
+
+        <div class="product-details">
+          <div class="title-and-date">
+            <h3 class="product-title">{{ product.title }}</h3>
+            <p class="release-date">{{ product.releaseDate | date }}</p>
+          </div>
+          <p class="product-code">Code: {{ product.code }}</p>
+          <p>Variants: {{ product.numberOfVariants }}</p>
+          <p class="product-sales">Sales: {{ product.sales }}</p>
+          <p>
+            Stock: {{ product.stock.itemsInStock }} items,
+            {{ product.stock.variantsInStock }} variants
+          </p>
         </div>
-        <p class="product-code">Code: {{ product.code }}</p>
-        <p>Variants: {{ product.numberOfVariants }}</p>
-        <p class="product-sales">Sales: {{ product.sales }}</p>
-        <p>
-          Stock: {{ product.stock.itemsInStock }} items,
-          {{ product.stock.variantsInStock }} variants
+
+        <button class="edit-icon" (click)="openEditForm(product)">
+          <!-- Replace with an actual icon or image -->
+          <img src="/assets/edit.png" alt="Edit" style="height: 10px; width: 10px;" />
+        </button>
+      </div>
+    </cdk-virtual-scroll-viewport>
+
+    <!-- Not Found Message -->
+    <div
+      *ngIf="dataService.filteredProducts.length === 0"
+      class="not-found-container h-full flex flex-col justify-center items-center bg-gray-100 py-10"
+    >
+      <div class="text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-3">
+          No Catalog Found
+        </h2>
+        <p class="text-lg text-gray-600">
+          We are updating the inventory. Check back soon!
         </p>
       </div>
     </div>
-  </cdk-virtual-scroll-viewport>
+  </div>
+
+  <!-- In your component.html file -->
+  <div *ngIf="dataService.showEditForm" class="modal-overlay" (click)="closeEditForm($event)">
+    <div class="modal-content" (click)="stopPropagation($event)">
+      <form [formGroup]="dataService.editProductForm" (ngSubmit)="submitEditForm()">
+        <!-- Form fields go here -->
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  
+
+
 </div>

@@ -24,6 +24,9 @@ export class DataService {
   filteredProducts: Product[] = [];
   searchTerm = '';
   currentFilter = 'hot'; // Keep track of the current filter
+  showEditForm: boolean = false; // To control the visibility of the edit form
+  editProductForm!: FormGroup; // To handle the edit form data
+
 
   products: Product[] = [
     {
@@ -80,6 +83,7 @@ export class DataService {
 
   constructor(private fb: FormBuilder) {
     this.initializeProductForm();
+    this.initializeEditProductForm();
    }
 
    public initializeProductForm(): void {
@@ -88,6 +92,24 @@ export class DataService {
       code: ['', Validators.required],
       variants: this.fb.array([this.createVariant()], Validators.minLength(1)),
     });
+  }
+
+  private initializeEditProductForm(): void {
+    this.editProductForm = this.fb.group({
+      title: ['', Validators.required],
+      code: ['', Validators.required],
+      // Add other fields as needed
+    });
+  }
+
+  initializeEditForm(product: Product): void {
+    this.editProductForm.setValue({
+      title: product.title,
+      code: product.code,
+      // Set other fields as needed
+    });
+  
+    this.showEditForm = true; // Show the edit form
   }
 
   createVariant(): FormGroup {
@@ -136,7 +158,6 @@ export class DataService {
     }
   }
   
-
   // New properties for form handling
   
   ngOnInit() {
@@ -144,9 +165,13 @@ export class DataService {
     this.applyFilters();
   }
 
+  applySearch(searchTerm: string): void {
+    this.searchTerm = searchTerm;
+    this.applyFilters();
+  }
+
   setFilter(filterType: string) {
     this.currentFilter = filterType;
-    console.log("Current Filter:", this.currentFilter); // Add this line
     this.applyFilters();
   }
 
@@ -178,6 +203,16 @@ export class DataService {
     }
 
     this.filteredProducts = [...tempProducts];
+  }
+
+  updateProduct(updatedProduct: Product): void {
+    // Find the product in the products array and update it
+    const index = this.products.findIndex(p => p.code === updatedProduct.code);
+    if (index !== -1) {
+      this.products[index] = updatedProduct;
+    }
+  
+    this.showEditForm = false; // Hide the edit form after updating
   }
 
   

@@ -36,14 +36,37 @@ interface Product {
   styleUrl: './products.component.css',
 })
 export class ProductsComponent {
-  
-  constructor(public dataService: DataService) {
-
-  }
+  constructor(public dataService: DataService) {}
 
   ngOnInit() {
     this.dataService.currentFilter = 'hot'; // Set the default filter to 'hot'
     this.dataService.applyFilters();
   }
 
+  openEditForm(product: Product): void {
+    console.log('EDIT FORM');
+    this.dataService.initializeEditForm(product);
+  }
+
+  // In your component.ts file
+
+  closeEditForm(event: MouseEvent): void {
+    // Close the modal
+    this.dataService.showEditForm = false;
+  }
+
+  stopPropagation(event: MouseEvent): void {
+    // Prevent the click from propagating to the overlay
+    event.stopPropagation();
+  }
+
+  submitEditForm(): void {
+    if (this.dataService.editProductForm.valid) {
+      // Process the edited data
+      const updatedProduct = this.dataService.editProductForm.value;
+      this.dataService.updateProduct(updatedProduct);
+      // Hide the edit form
+      this.dataService.showEditForm = false;
+    }
+  }
 }
