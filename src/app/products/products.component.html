@@ -31,7 +31,11 @@
 
   <div class="products-and-message-container">
     <!-- Product List -->
-    <cdk-virtual-scroll-viewport itemSize="150" class="product-list" *ngIf="dataService.filteredProducts.length > 0">
+    <cdk-virtual-scroll-viewport
+      itemSize="150"
+      class="product-list"
+      *ngIf="dataService.filteredProducts.length > 0"
+    >
       <div
         *cdkVirtualFor="let product of dataService.filteredProducts"
         class="product-card"
@@ -58,7 +62,11 @@
 
         <button class="edit-icon" (click)="openEditForm(product)">
           <!-- Replace with an actual icon or image -->
-          <img src="/assets/edit.png" alt="Edit" style="height: 10px; width: 10px;" />
+          <img
+            src="/assets/edit.png"
+            alt="Edit"
+            style="height: 10px; width: 10px"
+          />
         </button>
       </div>
     </cdk-virtual-scroll-viewport>
@@ -80,15 +88,61 @@
   </div>
 
   <!-- In your component.html file -->
-  <div *ngIf="dataService.showEditForm" class="modal-overlay" (click)="closeEditForm($event)">
-    <div class="modal-content" (click)="stopPropagation($event)">
-      <form [formGroup]="dataService.editProductForm" (ngSubmit)="submitEditForm()">
-        <!-- Form fields go here -->
-        <button type="submit">Save Changes</button>
-      </form>
-    </div>
+<div *ngIf="dataService.showEditForm" class="modal-overlay fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center" (click)="closeEditForm($event)">
+  <div class="modal-content bg-white p-6 rounded-lg shadow-lg">
+    <form [formGroup]="dataService.editProductForm" (ngSubmit)="submitEditForm()" class="space-y-4">
+      
+      <!-- Each form group is a flex container with centered content -->
+      <div class="form-group flex flex-col items-center">
+        <label for="image" class="font-medium text-gray-700 mb-2">Image URL:</label>
+        <input type="text" formControlName="image" id="image" class="input input-bordered w-full max-w-xs text-center">
+      </div>
+
+      <div class="form-group flex flex-col items-center">
+        <label for="title" class="font-medium text-gray-700 mb-2">Title:</label>
+        <input type="text" formControlName="title" id="title" class="input input-bordered w-full max-w-xs text-center">
+      </div>
+
+      <div class="form-group flex flex-col items-center">
+        <label for="releaseDate" class="font-medium text-gray-700 mb-2">Release Date:</label>
+        <input type="date" formControlName="releaseDate" id="releaseDate" class="input input-bordered w-full max-w-xs text-center">
+      </div>
+
+      <div class="form-group flex flex-col items-center">
+        <label for="code" class="font-medium text-gray-700 mb-2">Product Code:</label>
+        <input type="text" formControlName="code" id="code" readonly class="input input-bordered w-full max-w-xs text-center">
+      </div>
+
+      <div class="form-group flex flex-col items-center">
+        <label for="numberOfVariants" class="font-medium text-gray-700 mb-2">Number of Variants:</label>
+        <input type="number" formControlName="numberOfVariants" id="numberOfVariants" class="input input-bordered w-full max-w-xs text-center">
+      </div>
+
+      <div class="form-group flex flex-col items-center">
+        <label for="sales" class="font-medium text-gray-700 mb-2">Sales:</label>
+        <input type="number" formControlName="sales" id="sales" class="input input-bordered w-full max-w-xs text-center">
+      </div>
+
+       <!-- Stock Group -->
+       <div formGroupName="stock" class="space-y-4">
+        <div class="form-group flex flex-col items-center">
+          <label for="itemsInStock" class="font-medium text-gray-700 mb-2">Items in Stock:</label>
+          <input type="number" formControlName="itemsInStock" id="itemsInStock" class="input input-bordered w-full max-w-xs text-center">
+        </div>
+
+        <div class="form-group flex flex-col items-center">
+          <label for="variantsInStock" class="font-medium text-gray-700 mb-2">Variants in Stock:</label>
+          <input type="number" formControlName="variantsInStock" id="variantsInStock" class="input input-bordered w-full max-w-xs text-center">
+        </div>
+      </div>
+
+      <!-- Submit Button centered -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
   </div>
-  
+</div>
 
 
 </div>

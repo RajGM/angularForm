@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
-interface Product {
+export interface Product {
+  id: string;
   image: string;
   title: string;
   releaseDate: Date;
@@ -15,11 +16,9 @@ interface Product {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class DataService {
-
   baseUrl: string = 'http://localhost:4200/assets/';
   filteredProducts: Product[] = [];
   searchTerm = '';
@@ -27,9 +26,9 @@ export class DataService {
   showEditForm: boolean = false; // To control the visibility of the edit form
   editProductForm!: FormGroup; // To handle the edit form data
 
-
   products: Product[] = [
     {
+      id: '1asd',
       image: `${this.baseUrl}p1.jpg`,
       title: 'Product 1',
       releaseDate: new Date('2023-01-01'),
@@ -42,6 +41,7 @@ export class DataService {
       },
     },
     {
+      id: '2asd',
       image: `${this.baseUrl}p2.jpg`,
       title: 'Product 2',
       releaseDate: new Date('2023-02-15'),
@@ -54,6 +54,7 @@ export class DataService {
       },
     },
     {
+      id: '3asd',
       image: `${this.baseUrl}p1.jpg`,
       title: 'Product 1',
       releaseDate: new Date('2023-01-01'),
@@ -66,6 +67,7 @@ export class DataService {
       },
     },
     {
+      id: '4asd',
       image: `${this.baseUrl}p2.jpg`,
       title: 'Product 2',
       releaseDate: new Date('2023-02-15'),
@@ -84,9 +86,9 @@ export class DataService {
   constructor(private fb: FormBuilder) {
     this.initializeProductForm();
     this.initializeEditProductForm();
-   }
+  }
 
-   public initializeProductForm(): void {
+  public initializeProductForm(): void {
     this.productForm = this.fb.group({
       title: ['', Validators.required],
       code: ['', Validators.required],
@@ -103,13 +105,25 @@ export class DataService {
   }
 
   initializeEditForm(product: Product): void {
-    this.editProductForm.setValue({
-      title: product.title,
-      code: product.code,
-      // Set other fields as needed
+    // Convert Date object to string in YYYY-MM-DD format
+    const releaseDate = new Date(product.releaseDate);
+    const releaseDateString = releaseDate.toISOString().split('T')[0];
+
+    this.editProductForm = this.fb.group({
+      image: [product.image, Validators.required],
+      title: [product.title, Validators.required],
+      releaseDate: [releaseDateString, Validators.required],
+      code: [product.code], // Read-only, no validators
+      numberOfVariants: [product.numberOfVariants, Validators.required],
+      sales: [product.sales, Validators.required],
+      stock: this.fb.group({
+        // Nested FormGroup for stock
+        itemsInStock: [product.stock.itemsInStock, Validators.required],
+        variantsInStock: [product.stock.variantsInStock, Validators.required],
+      }),
     });
-  
-    this.showEditForm = true; // Show the edit form
+
+    this.showEditForm = true;
   }
 
   createVariant(): FormGroup {
@@ -130,8 +144,8 @@ export class DataService {
 
   submitProductForm(): void {
     if (this.productForm.valid) {
-      console.log("Form Data:", this.productForm.value);
-  
+      console.log('Form Data:', this.productForm.value);
+
       // Extract form data
       const newProduct: Product = {
         ...this.productForm.value,
@@ -145,21 +159,20 @@ export class DataService {
           variantsInStock: this.productForm.value.variants.length,
         },
       };
-  
+
       // Add the new product to the products array
       this.products.push(newProduct);
-  
+
       // Optionally, you might want to reset the form here
       this.productForm.reset();
-  
     } else {
-      console.log("Form is not valid");
+      console.log('Form is not valid');
       // Handle form validation errors
     }
   }
-  
+
   // New properties for form handling
-  
+
   ngOnInit() {
     this.currentFilter = 'hot'; // Set the default filter to 'hot'
     this.applyFilters();
@@ -206,14 +219,19 @@ export class DataService {
   }
 
   updateProduct(updatedProduct: Product): void {
-    // Find the product in the products array and update it
-    const index = this.products.findIndex(p => p.code === updatedProduct.code);
+    console.log(updatedProduct);
+    // Find the product in the products array by its id and update it
+    const index = this.products.findIndex(
+      (p) => p.code === updatedProduct.code
+    );
     if (index !== -1) {
+      console.log('index found');
       this.products[index] = updatedProduct;
+    } else {
+      console.log('Index not found');
     }
-  
+
+    this.applyFilters();
     this.showEditForm = false; // Hide the edit form after updating
   }
-
-  
 }

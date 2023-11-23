@@ -9,19 +9,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DataService } from '../data.service';
-
-interface Product {
-  image: string;
-  title: string;
-  releaseDate: Date;
-  code: string;
-  numberOfVariants: number;
-  sales: number;
-  stock: {
-    itemsInStock: number;
-    variantsInStock: number;
-  };
-}
+import { Product } from '../data.service';
 
 @Component({
   selector: 'app-products',
@@ -49,18 +37,19 @@ export class ProductsComponent {
   }
 
   // In your component.ts file
-
   closeEditForm(event: MouseEvent): void {
-    // Close the modal
-    this.dataService.showEditForm = false;
+    if (event.target === event.currentTarget) {
+      this.dataService.showEditForm = false;
+    }
   }
-
+  
   stopPropagation(event: MouseEvent): void {
     // Prevent the click from propagating to the overlay
     event.stopPropagation();
   }
 
   submitEditForm(): void {
+    console.log(this.dataService.editProductForm.value)
     if (this.dataService.editProductForm.valid) {
       // Process the edited data
       const updatedProduct = this.dataService.editProductForm.value;
