@@ -1,33 +1,57 @@
 <div class="products-container">
-  <h1>Market Products</h1>
-
+  
   <!-- Search Bar -->
-  <div class="search-bar mb-4 flex justify-center items-center space-x-2">
+  <div class="search-bar mb-4 flex flex-col items-center space-y-2">
     <input
       type="text"
       #searchInput
       placeholder="Search products..."
-      class="input input-bordered input-primary w-full max-w-xs"
+      class="p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary shadow-sm focus:ring focus:ring-opacity-50 w-full max-w-xs"
     />
+    
+  </div>
+  
+  <div class="flex justify-center">
     <button
-      class="btn btn-primary"
+      class="px-4 py-2 text-white bg-black rounded-lg hover:bg-opacity-80 transition duration-300"
       (click)="dataService.applySearch(searchInput.value)"
     >
       Search
     </button>
+    <button
+      class="px-4 py-2 text-gray-600 hover:text-red-600 transition duration-300"
+      (click)="searchInput.value = ''; dataService.applySearch('');"
+    >
+      <i class="fas fa-times"></i> Reset Search
+    </button>
   </div>
+  
+  
+  
 
-  <!-- Filter Buttons -->
-  <div class="search-and-filter">
-    <div class="flex justify-center space-x-4 my-4">
-      <button class="btn" (click)="dataService.setFilter('hot')">
-        Hot Products
-      </button>
-      <button class="btn" (click)="dataService.setFilter('upcoming')">
-        Upcoming Releases
-      </button>
-    </div>
+<!-- Filter Toggle Button -->
+<div class="search-and-filter my-4">
+  <div class="flex justify-center space-x-4">
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      [class]="dataService.currentFilter === 'hot' ? 'btn-primary' : 'btn'"
+      (click)="dataService.setFilter('hot')"
+    >
+      Hot Products
+    </button>
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      [class]="dataService.currentFilter === 'upcoming' ? 'btn-primary' : 'btn'"
+      (click)="dataService.setFilter('upcoming')"
+    >
+      Upcoming Releases
+    </button>
   </div>
+</div>
+
+
+
+
 
   <div class="products-and-message-container">
     <!-- Product List -->

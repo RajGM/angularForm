@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DataService } from '../data.service';
 import { Product } from '../data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -24,7 +25,7 @@ import { Product } from '../data.service';
   styleUrl: './products.component.css',
 })
 export class ProductsComponent {
-  constructor(public dataService: DataService) {}
+  constructor(public dataService: DataService,private router: Router) {}
 
   ngOnInit() {
     this.dataService.currentFilter = 'hot'; // Set the default filter to 'hot'
@@ -32,7 +33,8 @@ export class ProductsComponent {
   }
 
   openCreateProductModal(){
-    
+    this.router.navigate(['/create-product']);
+
   }
 
   openEditForm(product: Product): void {
