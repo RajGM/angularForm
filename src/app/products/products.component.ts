@@ -25,37 +25,40 @@ import { Router } from '@angular/router';
   styleUrl: './products.component.css',
 })
 export class ProductsComponent {
-  constructor(public dataService: DataService,private router: Router) {}
+  // Constructor with Dependency Injection
+  constructor(public dataService: DataService, private router: Router) {}
 
+  // Lifecycle hook for initialization
   ngOnInit() {
     this.dataService.currentFilter = 'hot'; // Set the default filter to 'hot'
     this.dataService.applyFilters();
   }
 
-  openCreateProductModal(){
+  // Function to navigate to the product creation page
+  openCreateProductModal() {
     this.router.navigate(['/create-product']);
-
   }
 
+  // Function to open the edit form with the selected product
   openEditForm(product: Product): void {
-    console.log('EDIT FORM');
     this.dataService.initializeEditForm(product);
   }
 
-  // In your component.ts file
+  // Function to close the edit form
   closeEditForm(event: MouseEvent): void {
     if (event.target === event.currentTarget) {
       this.dataService.showEditForm = false;
     }
   }
-  
+
+  // Function to stop event propagation
   stopPropagation(event: MouseEvent): void {
     // Prevent the click from propagating to the overlay
     event.stopPropagation();
   }
 
+  // Function to submit the edit form
   submitEditForm(): void {
-    console.log(this.dataService.editProductForm.value)
     if (this.dataService.editProductForm.valid) {
       // Process the edited data
       const updatedProduct = this.dataService.editProductForm.value;

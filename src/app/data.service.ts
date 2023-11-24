@@ -31,7 +31,8 @@ export class DataService {
   showEditForm: boolean = false; // To control the visibility of the edit form
   editProductForm!: FormGroup; // To handle the edit form data
 
-   products: Product[] = [
+  // Sample product data
+  products: Product[] = [
     {
       id: '1asd',
       image: `${this.baseUrl}p1.jpg`,
@@ -124,14 +125,15 @@ export class DataService {
       },
     },
   ];
-  
-  productForm: FormGroup = this.fb.group({});
+
+  productForm: FormGroup = this.fb.group({}); // Form group for product creation
 
   constructor(private fb: FormBuilder) {
     this.initializeProductForm();
     this.initializeEditProductForm();
   }
 
+  // Initialize the product creation form
   public initializeProductForm(): void {
     this.productForm = this.fb.group({
       image: [''],
@@ -141,14 +143,15 @@ export class DataService {
     });
   }
 
+  // Initialize the product edit form
   private initializeEditProductForm(): void {
     this.editProductForm = this.fb.group({
       title: ['', Validators.required],
       code: ['', Validators.required],
-      // Add other fields as needed
     });
   }
 
+  // Initialize the edit form with a product's data
   initializeEditForm(product: Product): void {
     // Convert Date object to string in YYYY-MM-DD format
     const releaseDate = new Date(product.releaseDate);
@@ -171,25 +174,28 @@ export class DataService {
     this.showEditForm = true;
   }
 
+  // Create a new variant form group
   createVariant(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
     });
   }
 
+  // Add a new variant to the product form
   addVariant(): void {
     const variants = this.productForm.get('variants') as FormArray;
     variants.push(this.createVariant());
   }
 
+  // Remove a variant from the product form
   removeVariant(index: number): void {
     const variants = this.productForm.get('variants') as FormArray;
     variants.removeAt(index);
   }
 
+  // Submit the product creation form
   submitProductForm(): Result {
     if (this.productForm.valid) {
-      
       // Safely access the image field value using optional chaining
       const imageField = this.productForm.get('image')?.value;
       const imageUrl = imageField || `${this.baseUrl}default.jpg`;
@@ -198,9 +204,7 @@ export class DataService {
       const newProduct: Product = {
         ...this.productForm.value,
         numberOfVariants: this.productForm.value.variants.length,
-        // Assuming you have an image field or you can set a default image
         image: imageUrl, // Use the imageUrl determined above
-        // Add other necessary fields or default values
         releaseDate: new Date(), // Example, set the current date as release date
         sales: 0, // Assuming initial sales are 0
         stock: {
@@ -215,32 +219,32 @@ export class DataService {
       // Optionally, you might want to reset the form here
       this.productForm.reset();
       return { success: true, message: 'Product created successfully' };
-
     } else {
-      console.log('Form is not valid');
       return { success: false, message: 'Form is not valid' };
       // Handle form validation errors
     }
   }
 
   // New properties for form handling
-
   ngOnInit() {
     this.currentFilter = 'hot'; // Set the default filter to 'hot'
     this.applyFilters();
   }
 
+  // Apply search filter
   applySearch(searchTerm: string): void {
-    console.log(this.filteredProducts)
+    console.log(this.filteredProducts);
     this.searchTerm = searchTerm;
     this.applyFilters();
   }
 
+  // Set the current filter type
   setFilter(filterType: string) {
     this.currentFilter = filterType;
     this.applyFilters();
   }
 
+  // Apply filters to the products
   applyFilters() {
     let tempProducts = [...this.products];
 
@@ -271,17 +275,15 @@ export class DataService {
     this.filteredProducts = [...tempProducts];
   }
 
+  // Update a product in the products array
   updateProduct(updatedProduct: Product): void {
-    console.log(updatedProduct);
     // Find the product in the products array by its id and update it
     const index = this.products.findIndex(
       (p) => p.code === updatedProduct.code
     );
     if (index !== -1) {
-      console.log('index found');
       this.products[index] = updatedProduct;
     } else {
-      console.log('Index not found');
     }
 
     this.applyFilters();

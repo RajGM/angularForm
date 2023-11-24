@@ -1,16 +1,17 @@
+<!-- Main container for the products section -->
 <div class="products-container">
-  
   <!-- Search Bar -->
   <div class="search-bar mb-4 flex flex-col items-center space-y-2">
+    <!-- Input field for searching products -->
     <input
       type="text"
       #searchInput
       placeholder="Search products..."
       class="p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary shadow-sm focus:ring focus:ring-opacity-50 w-full max-w-xs"
     />
-    
   </div>
-  
+
+  <!-- Search and Reset Buttons -->
   <div class="flex justify-center">
     <button
       class="px-4 py-2 text-white bg-black rounded-lg hover:bg-opacity-80 transition duration-300"
@@ -20,38 +21,33 @@
     </button>
     <button
       class="px-4 py-2 text-gray-600 hover:text-red-600 transition duration-300"
-      (click)="searchInput.value = ''; dataService.applySearch('');"
+      (click)="searchInput.value = ''; dataService.applySearch('')"
     >
       <i class="fas fa-times"></i> Reset Search
     </button>
   </div>
-  
-  
-  
 
-<!-- Filter Toggle Button -->
-<div class="search-and-filter my-4">
-  <div class="flex justify-center space-x-4">
-    <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      [class]="dataService.currentFilter === 'hot' ? 'btn-primary' : 'btn'"
-      (click)="dataService.setFilter('hot')"
-    >
-      Hot Products
-    </button>
-    <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      [class]="dataService.currentFilter === 'upcoming' ? 'btn-primary' : 'btn'"
-      (click)="dataService.setFilter('upcoming')"
-    >
-      Upcoming Releases
-    </button>
+  <!-- Filter Toggle Button -->
+  <div class="search-and-filter my-4">
+    <div class="flex justify-center space-x-4">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        [class]="dataService.currentFilter === 'hot' ? 'btn-primary' : 'btn'"
+        (click)="dataService.setFilter('hot')"
+      >
+        Hot Products
+      </button>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        [class]="
+          dataService.currentFilter === 'upcoming' ? 'btn-primary' : 'btn'
+        "
+        (click)="dataService.setFilter('upcoming')"
+      >
+        Upcoming Releases
+      </button>
+    </div>
   </div>
-</div>
-
-
-
-
 
   <div class="products-and-message-container">
     <!-- Product List -->
@@ -226,15 +222,16 @@
 
         <!-- Submit Button centered -->
         <div class="text-center">
-          <button type="submit" class="btn btn-primary btn-custom">Save Changes</button>
-      </div>
-      
+          <button type="submit" class="btn btn-primary btn-custom">
+            Save Changes
+          </button>
+        </div>
       </form>
     </div>
   </div>
-
 </div>
 
+<!-- Button to Redirect to Create Product Page -->
 <div
   class="create-product-button-container flex justify-center items-center my-4 w-full"
 >
