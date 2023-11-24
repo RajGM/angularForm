@@ -90,6 +90,7 @@ export class DataService {
 
   public initializeProductForm(): void {
     this.productForm = this.fb.group({
+      image: [''],
       title: ['', Validators.required],
       code: ['', Validators.required],
       variants: this.fb.array([this.createVariant()], Validators.minLength(1)),
@@ -146,11 +147,16 @@ export class DataService {
     if (this.productForm.valid) {
       console.log('Form Data:', this.productForm.value);
 
+      // Safely access the image field value using optional chaining
+      const imageField = this.productForm.get('image')?.value;
+      const imageUrl = imageField || `${this.baseUrl}default.jpg`;
+
       // Extract form data
       const newProduct: Product = {
         ...this.productForm.value,
+        numberOfVariants: this.productForm.value.variants.length,
         // Assuming you have an image field or you can set a default image
-        image: `${this.baseUrl}default.jpg`,
+        image: imageUrl, // Use the imageUrl determined above
         // Add other necessary fields or default values
         releaseDate: new Date(), // Example, set the current date as release date
         sales: 0, // Assuming initial sales are 0
@@ -179,6 +185,7 @@ export class DataService {
   }
 
   applySearch(searchTerm: string): void {
+    console.log(this.filteredProducts)
     this.searchTerm = searchTerm;
     this.applyFilters();
   }

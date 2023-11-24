@@ -2,7 +2,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
+@import 'ngx-toastr/toastr';
 main {
     display: flex;
     flex-direction: column;

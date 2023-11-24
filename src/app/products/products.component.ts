@@ -31,6 +31,10 @@ export class ProductsComponent {
     this.dataService.applyFilters();
   }
 
+  openCreateProductModal(){
+    
+  }
+
   openEditForm(product: Product): void {
     console.log('EDIT FORM');
     this.dataService.initializeEditForm(product);

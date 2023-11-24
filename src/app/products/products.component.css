@@ -66,3 +66,20 @@
     z-index: 1001;
   }
   
+  .create-product-button {
+    width: 100%; /* Full width */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 15px 20px; /* Increased padding */
+    border-radius: 5px;
+    font-size: 18px; /* Larger font size */
+    font-weight: 600; /* Bolder font */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: center;
+  }
+  
+  .create-product-button:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+  }
