@@ -31,7 +31,7 @@ export class DataService {
   showEditForm: boolean = false; // To control the visibility of the edit form
   editProductForm!: FormGroup; // To handle the edit form data
 
-  products: Product[] = [
+   products: Product[] = [
     {
       id: '1asd',
       image: `${this.baseUrl}p1.jpg`,
@@ -60,32 +60,71 @@ export class DataService {
     },
     {
       id: '3asd',
-      image: `${this.baseUrl}p1.jpg`,
-      title: 'Product 1',
-      releaseDate: new Date('2023-01-01'),
-      code: 'P1001',
-      numberOfVariants: 3,
-      sales: 150,
+      image: `${this.baseUrl}p3.jpg`,
+      title: 'Product 3',
+      releaseDate: new Date('2023-03-15'),
+      code: 'P1003',
+      numberOfVariants: 4,
+      sales: 180,
       stock: {
-        itemsInStock: 50,
+        itemsInStock: 60,
         variantsInStock: 2,
       },
     },
     {
       id: '4asd',
-      image: `${this.baseUrl}p2.jpg`,
-      title: 'Product 2',
-      releaseDate: new Date('2023-02-15'),
-      code: 'P1002',
-      numberOfVariants: 5,
-      sales: 200,
+      image: `${this.baseUrl}p4.jpg`,
+      title: 'Product 4',
+      releaseDate: new Date('2023-04-10'),
+      code: 'P1004',
+      numberOfVariants: 2,
+      sales: 90,
       stock: {
-        itemsInStock: 75,
-        variantsInStock: 3,
+        itemsInStock: 30,
+        variantsInStock: 1,
+      },
+    },
+    {
+      id: '5asd',
+      image: `${this.baseUrl}p5.jpg`,
+      title: 'Product 5',
+      releaseDate: new Date('2023-05-20'),
+      code: 'P1005',
+      numberOfVariants: 3,
+      sales: 120,
+      stock: {
+        itemsInStock: 40,
+        variantsInStock: 2,
+      },
+    },
+    {
+      id: '6asd',
+      image: `${this.baseUrl}p6.jpg`,
+      title: 'Product 6',
+      releaseDate: new Date('2023-06-05'),
+      code: 'P1006',
+      numberOfVariants: 6,
+      sales: 220,
+      stock: {
+        itemsInStock: 90,
+        variantsInStock: 4,
+      },
+    },
+    {
+      id: '7asd',
+      image: `${this.baseUrl}default.jpg`,
+      title: 'Product 7',
+      releaseDate: new Date('2023-07-30'),
+      code: 'P1007',
+      numberOfVariants: 2,
+      sales: 70,
+      stock: {
+        itemsInStock: 20,
+        variantsInStock: 1,
       },
     },
   ];
-
+  
   productForm: FormGroup = this.fb.group({});
 
   constructor(private fb: FormBuilder) {

@@ -16,17 +16,17 @@
   }
   
   .image-upload-container .fa-plus-circle {
-    /* Style for your plus icon */
+    /* Style for plus icon */
   }
   
   .image-upload-container img {
-    width: 100%; /* Adjust as needed */
+    width: 100%;
   }
   
   .image-upload-container button {
     background: none;
     border: none;
-    font-size: 24px; /* Adjust as needed */
+    font-size: 24px; 
     cursor: pointer;
   }
   
