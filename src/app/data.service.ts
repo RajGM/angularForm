@@ -15,6 +15,11 @@ export interface Product {
   };
 }
 
+interface Result {
+  success: boolean;
+  message: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -143,10 +148,9 @@ export class DataService {
     variants.removeAt(index);
   }
 
-  submitProductForm(): void {
+  submitProductForm(): Result {
     if (this.productForm.valid) {
-      console.log('Form Data:', this.productForm.value);
-
+      
       // Safely access the image field value using optional chaining
       const imageField = this.productForm.get('image')?.value;
       const imageUrl = imageField || `${this.baseUrl}default.jpg`;
@@ -171,8 +175,11 @@ export class DataService {
 
       // Optionally, you might want to reset the form here
       this.productForm.reset();
+      return { success: true, message: 'Product created successfully' };
+
     } else {
       console.log('Form is not valid');
+      return { success: false, message: 'Form is not valid' };
       // Handle form validation errors
     }
   }

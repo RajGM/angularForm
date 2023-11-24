@@ -20,6 +20,9 @@ export class CreateProductComponent {
   imagePreview: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
   private storage: any; // Declare storage here
+  isLoading: boolean = false;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(public dataService: DataService) {
     const app = initializeApp(firebaseConfig);
@@ -78,22 +81,59 @@ export class CreateProductComponent {
   }
 
   onSubmit(): void {
-    console.log('Selected File:', this.selectedFile);
-
+    this.isLoading = false;
+    this.errorMessage = null;
+    this.successMessage = null;
+  
     if (this.selectedFile) {
-      console.log('Uploading image...');
+      this.isLoading = true; // Show loading message
       this.uploadImage(this.selectedFile)
         .then((imageUrl) => {
           this.dataService.productForm.patchValue({ image: imageUrl });
           console.log('ImageURL:', imageUrl);
-          this.dataService.submitProductForm(); // Then submit the form
+          const result = this.dataService.submitProductForm(); // Submit the form and get the result
+  
+          if (result.success) {
+            this.successMessage = 'Product created successfully'; // Show success message
+            this.removeImage();
+          } else {
+            this.errorMessage = 'Failed to create product'; // Show error message
+          }
+  
+          // Clear messages after 2 seconds
+          setTimeout(() => {
+            this.successMessage = null;
+            this.errorMessage = null;
+          }, 2000);
         })
         .catch((error) => {
           console.error('Error uploading image:', error);
-          // Handle the error appropriately
+          this.errorMessage = 'Failed to upload image'; // Show error message
+  
+          // Clear error message after 2 seconds
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 2000);
+        })
+        .finally(() => {
+          this.isLoading = false; // Hide loading message
         });
     } else {
-      this.dataService.submitProductForm(); // Submit the form without an image
+      const result = this.dataService.submitProductForm(); // Submit the form and get the result
+  
+      if (result.success) {
+        this.successMessage = 'Product created successfully'; // Show success message
+      } else {
+        this.errorMessage = 'Failed to create product'; // Show error message
+      }
+  
+      // Clear messages after 2 seconds
+      setTimeout(() => {
+        this.successMessage = null;
+        this.errorMessage = null;
+      }, 2000);
     }
   }
+  
+
 }

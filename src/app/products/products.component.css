@@ -83,3 +83,21 @@
   .create-product-button:hover {
     background-color: #0056b3; /* Darker shade of blue on hover */
   }
+
+  .btn-custom {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding around the text */
+    font-family: 'Arial', sans-serif; /* Beautiful font, you can choose any */
+    font-size: 16px; /* Font size */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+.btn-custom:hover, .btn-custom:focus {
+    background-color: #0056b3; /* Slightly darker blue on hover/focus */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Larger shadow on hover/focus */
+    outline: none; /* Removes the outline on focus */
+}

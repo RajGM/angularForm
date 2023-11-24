@@ -3,23 +3,39 @@
   (ngSubmit)="onSubmit()"
   class="p-4 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
 >
-    <!-- Image Upload -->
-    <div class="image-upload-container relative border-dashed border-2 border-gray-300 rounded w-full py-2 px-3 text-center mb-4">
-      <input type="file" id="imageUpload" (change)="onImageSelected($event)" class="opacity-0 w-full h-full position-absolute top-0 left-0 cursor-pointer">
-      
-      <!-- PLUS symbol and instruction text -->
-      <div *ngIf="!imagePreview" class="flex flex-col items-center justify-center h-full">
-        <span class="text-gray-700 text-sm font-bold mb-2">Upload Image</span>
-        <i class="fas fa-plus-circle text-2xl text-gray-700"></i> <!-- Replace with your plus icon -->
-      </div>
-    
-      <!-- Image Preview with Cross Symbol -->
-      <div *ngIf="imagePreview" class="relative">
-        <img [src]="imagePreview" class="max-w-xs h-auto">
-        <button class="absolute top-0 right-0 text-red-500" (click)="removeImage()">×</button> <!-- Replace with your cross icon -->
-      </div>
+  <!-- Image Upload -->
+  <div
+    class="image-upload-container relative border-dashed border-2 border-gray-300 rounded w-full py-2 px-3 text-center mb-4"
+  >
+    <input
+      type="file"
+      id="imageUpload"
+      (change)="onImageSelected($event)"
+      class="opacity-0 w-full h-full position-absolute top-0 left-0 cursor-pointer"
+    />
+
+    <!-- PLUS symbol and instruction text -->
+    <div
+      *ngIf="!imagePreview"
+      class="flex flex-col items-center justify-center h-full"
+    >
+      <span class="text-gray-700 text-sm font-bold mb-2">Upload Image</span>
+      <i class="fas fa-plus-circle text-2xl text-gray-700"></i>
+      <!-- Replace with your plus icon -->
     </div>
-    
+
+    <!-- Image Preview with Cross Symbol -->
+    <div *ngIf="imagePreview" class="relative">
+      <img [src]="imagePreview" class="max-w-xs h-auto" />
+      <button
+        class="absolute top-0 right-0 text-red-500"
+        (click)="removeImage()"
+      >
+        ×
+      </button>
+      <!-- Replace with your cross icon -->
+    </div>
+  </div>
 
   <div class="mb-4">
     <label for="title" class="block text-gray-700 text-sm font-bold mb-2"
@@ -86,4 +102,18 @@
       Create Product
     </button>
   </div>
+
 </form>
+
+<div class="mt-4">
+  <!-- Loading Message -->
+  <div *ngIf="isLoading" class="text-yellow-600">
+    <i class="fas fa-spinner fa-spin"></i> Uploading image...
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="text-red-600">{{ errorMessage }}</div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="text-green-600">{{ successMessage }}</div>
+</div>
